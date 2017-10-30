@@ -39,6 +39,14 @@ namespace SearchIMG.Controllers
         [Route("api/Request/{number_images}")]
         public IEnumerable<string> Post(int number_images, [FromBody]string image)
         {
+            System.Diagnostics.Debug.WriteLine("Se recibio una peticion!!!");
+            if (image == null)
+            {
+                System.Diagnostics.Debug.WriteLine("La imagen fue nula!!!");
+                return new string[] { "NULL" };
+
+            }
+
             //base64str!! (image format)
             List<string> IMGstring = new List<string>(); // List with images to return
 

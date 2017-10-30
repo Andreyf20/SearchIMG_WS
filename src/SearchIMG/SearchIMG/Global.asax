@@ -1,1 +1,1 @@
-﻿<%@ Application Codebehind="Global.asax.cs" Inherits="SearchIMG.WebApiApplication" Language="C#" %>
+﻿<%@ Application CodeBehind="Global.asax.cs" Inherits="SearchIMG.WebApiApplication" Language="C#" %>

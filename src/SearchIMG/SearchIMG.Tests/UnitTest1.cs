@@ -12,7 +12,6 @@ namespace SearchIMG.Tests
         {
             //ImageProcessing testIMG = new ImageProcessing();
             //int result =  testIMG.binTodec("100110110");
-            System.Diagnostics.Debug.WriteLine("El resultado fue de "+result);
         }
     }
 }
