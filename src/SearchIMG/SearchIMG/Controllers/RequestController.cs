@@ -39,11 +39,10 @@ namespace SearchIMG.Controllers
         [Route("api/Request/{number_images}")]
         public string Post(int number_images, [FromBody]string image)
         {
-            //Este es el metodo al cual hay que enviar la imagen en formato base64str!!
-            List<string> IMGstring = new List<string>(); // List with images
-            string Final_Str = "ERROR-> No he cambiado el error inicial";
+            //base64str!! (image format)
+            List<string> IMGstring = new List<string>(); // List with images to return
 
-            //System.Diagnostics.Debug.WriteLine("El string de la imagen recibido fue en POST: {0}, {1}", number_images, image);
+            // Convert string to byte[]
             byte[] imageBytes = Convert.FromBase64String(image);
             using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
             {

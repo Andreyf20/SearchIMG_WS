@@ -34,10 +34,10 @@ namespace SearchIMG.Models
                 using (var bmp = (Bitmap)Image.FromFile(path)) {
                     Bitmap resized = new Bitmap(bmp, new Size(16, 16));
                     Bitmap sadbitmap = sad(resized);
-                    bool store = true;
+                    bool store = true; // Store the histogram created
                     createHistogram(sadbitmap, store);
                     string temp_str = ImageToBase64(bmp);
-                    imgBitmapsColored.Add(temp_str);
+                    imgBitmapsColored.Add(temp_str); // Store the image encoded in base64str
                     bmp.Dispose();
                 }
             }
@@ -64,13 +64,13 @@ namespace SearchIMG.Models
         public int binTodec(string num) {
             int numfinal = 0;
             double exp = num.Length-1;
-            while (num.Length > 0) {
+            int len = num.Length;
+            while (len > 0) {
                 if (num[0] == '1')
-                {
                     numfinal = numfinal + (int)(Math.Pow(2.0, exp));
-                }
                 exp--;
                 num = num.Substring(1, num.Length-1);
+                len--;
             }
             System.Diagnostics.Debug.WriteLine("El resultado fue de " + numfinal);
             return numfinal;
@@ -81,15 +81,17 @@ namespace SearchIMG.Models
         {
             int[] histogramatemp = new int[256];
             //double normalizer = bitmap.Width * bitmap.Height;
-            for (int p = 0; p < 255; p++)
+            for (int p = 0; p < 256; p++)
             {
                 histogramatemp[p] = 0;
             }
-            for (int i = 0; i < bitmap.Width; i++)
+            int width = bitmap.Width;
+            int height = bitmap.Height;
+            for (int i = 0; i < width; i++)
             {
                 int max = 0;
                 string numbinario = "";
-                for (int j = 0; j < bitmap.Height; j++)
+                for (int j = 0; j < height; j++)
                 {
                     Color pixel = bitmap.GetPixel(i, j);
                     Color comparar;
@@ -164,6 +166,7 @@ namespace SearchIMG.Models
                             numbinario += "0";
                     }
                     catch { numbinario += "0"; }
+                    // UNIFORM ---->
                     int k = 0;
                     while (k < 7)
                     {
@@ -177,7 +180,7 @@ namespace SearchIMG.Models
                         numbinario = numbinario.Substring(1, numbinario.Length - 1);
                         k++;
                     }
-                    System.Diagnostics.Debug.WriteLine("Se anadio un valor a una variable del hist");
+                    //System.Diagnostics.Debug.WriteLine("Se anadio un valor a una variable del hist");
                     histogramatemp[max] = histogramatemp[max] + 1;
                     numbinario = "";
                 }
@@ -197,13 +200,12 @@ namespace SearchIMG.Models
             bool store = false; // If you want to store the histogram
             int[] current_Histogram = createHistogram(sadbitmap, store);
             int sumafinal = 0; // Final Diference between histograms
-            System.Diagnostics.Debug.WriteLine("La cantidad de histogramas es de: {0}", histogramas.Count);
+            //System.Diagnostics.Debug.WriteLine("La cantidad de histogramas es de: {0}", histogramas.Count);
             for (int i = 0; i < histogramas.Count; i++)
             {
                 sumafinal = 0;
                 for(int j = 0; j < 256; j++)
                 {
-                    //System.Diagnostics.Debug.WriteLine("El indice del histograma es de: {0}", i);
                     int num1 = (int)((histogramas[i])[j]);
                     int num2 = current_Histogram[j];
                     int dif_temp = num1 - num2;
@@ -266,7 +268,6 @@ namespace SearchIMG.Models
             // Convert byte[] to base 64 string
             string base64String = Convert.ToBase64String(imageBytes);
 
-            System.Diagnostics.Debug.WriteLine("Me cago en dios sí funciona");
             return base64String;
         }
     }
