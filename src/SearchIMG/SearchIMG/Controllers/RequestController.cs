@@ -37,7 +37,7 @@ namespace SearchIMG.Controllers
 
         // POST: api/Request
         [Route("api/Request/{number_images}")]
-        public string Post(int number_images, [FromBody]string image)
+        public IEnumerable<string> Post(int number_images, [FromBody]string image)
         {
             //base64str!! (image format)
             List<string> IMGstring = new List<string>(); // List with images to return
@@ -56,7 +56,7 @@ namespace SearchIMG.Controllers
                 // Final list of imgs
                 IMGstring = baseimg.comparison_histograms(image_bitmap, number_images);
             }
-            return IMGstring[0];
+            return IMGstring;
         }
 
         // PUT: api/Request/5

@@ -172,7 +172,12 @@ namespace SearchIMG.Models
                     {
                         int dec = this.binTodec(numbinario);
                         if (dec > max)
+                        {
                             max = dec;
+                            if (max == 255)
+                                break;
+
+                        }
                         if (numbinario[0] == '0')
                             numbinario += "0";
                         else
@@ -180,7 +185,6 @@ namespace SearchIMG.Models
                         numbinario = numbinario.Substring(1, numbinario.Length - 1);
                         k++;
                     }
-                    //System.Diagnostics.Debug.WriteLine("Se anadio un valor a una variable del hist");
                     histogramatemp[max] = histogramatemp[max] + 1;
                     numbinario = "";
                 }
