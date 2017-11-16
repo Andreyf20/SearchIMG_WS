@@ -198,3 +198,4 @@ C:\Users\torre\Documents\GIT_ROOT\SearchIMG_WS\src\SearchIMG\SearchIMG\bin\Syste
 C:\Users\torre\Documents\GIT_ROOT\SearchIMG_WS\src\SearchIMG\SearchIMG\obj\Debug\SearchIMG.csproj.CoreCompileInputs.cache
 C:\Users\torre\Documents\GIT_ROOT\SearchIMG_WS\src\SearchIMG\SearchIMG\obj\Debug\SearchIMG.dll
 C:\Users\torre\Documents\GIT_ROOT\SearchIMG_WS\src\SearchIMG\SearchIMG\obj\Debug\SearchIMG.pdb
+C:\Users\torre\Documents\GIT_ROOT\SearchIMG_WS\src\SearchIMG\SearchIMG\obj\Debug\SearchIMG.csprojResolveAssemblyReference.cache

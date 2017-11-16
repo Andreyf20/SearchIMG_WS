@@ -9,9 +9,15 @@ using System.Text;
 using System.Drawing;
 using System.IO;
 using System.Collections;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace SearchIMG.Controllers
 {
+    public class IMG {
+        public string encodedimg;
+    }
+
     public class RequestController : ApiController
     {
         private ImageProcessing baseimg = ImageProcessing.getSingleton();
@@ -36,14 +42,18 @@ namespace SearchIMG.Controllers
         }
 
         // POST: api/Request
+        //IEnumerable<string>
         [Route("api/Request/{number_images}")]
-        public IEnumerable<string> Post(int number_images, [FromBody]string image)
+        public string Post(int number_images, [FromBody]JObject image)
         {
+            //JObject jobject = JObject.Parse(image.encodedimg);
+            string parseIMG = (string)image["image"];
+
             System.Diagnostics.Debug.WriteLine("Se recibio una peticion!!!");
             if (image == null)
             {
                 System.Diagnostics.Debug.WriteLine("La imagen fue nula!!!");
-                return new string[] { "NULL" };
+                return "NULL";
 
             }
 
@@ -51,7 +61,7 @@ namespace SearchIMG.Controllers
             List<string> IMGstring = new List<string>(); // List with images to return
 
             // Convert string to byte[]
-            byte[] imageBytes = Convert.FromBase64String(image);
+            byte[] imageBytes = Convert.FromBase64String(parseIMG);
             using (var ms = new MemoryStream(imageBytes, 0, imageBytes.Length))
             {
                 // Convert byte[] to Image
@@ -64,7 +74,24 @@ namespace SearchIMG.Controllers
                 // Final list of imgs
                 IMGstring = baseimg.comparison_histograms(image_bitmap, number_images);
             }
-            return IMGstring;
+
+            //Return json response with all images
+            var dict = new Dictionary<string, IMG[]>();
+            dict.Add("image", new IMG[number_images]);
+            int i = 0;
+            while (i < number_images)
+            {
+                dict["image"][i] = new IMG { encodedimg = IMGstring[i] };
+                i++;
+            }
+            var json = JsonConvert.SerializeObject(dict);
+            return json;
+        }
+
+        // POST: api/Request/test/
+        [Route("api/Request/test/")]
+        public string postSTR([FromBody]Object image) {
+            return image.GetType().ToString();
         }
 
         // PUT: api/Request/5
