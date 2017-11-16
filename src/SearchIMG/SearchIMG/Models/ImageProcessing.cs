@@ -263,6 +263,8 @@ namespace SearchIMG.Models
         // To return each img encoded so Android, etc, can read them
         public string ImageToBase64(Image image)
         {
+            if (image == null)
+                return null;
             MemoryStream ms = new MemoryStream();
 
             // Convert Image to byte[]
